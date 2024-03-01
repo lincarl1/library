@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <title></title>
+</head>
+<body>
+    <div id="title">
+        <h1>Personal Library</h1>
+    </div>
+    <div id="stats">
+        <h2>Library Log</h2>
+        <p id="totalBooks">Total Books: </p>
+        <p id="readCount">Read Count: </p>
+        <p id="notReadCount">Unread Count: </p>
+    </div>
+    <div id="library">
+        <div class="book" id="addBookDiv" onclick="openForm()">
+            <h2 id="addBook" class="bookText">
+                +
+            </h2>
+        </div>
+    </div>
+    <!--Form-->
+    <form id="bookForm" class="book">
+        <button class="closeBtn" onclick="closeForm()">x</button>
+        <label for="title" class="label">Title: </label>
+        <input type="text" name="title" class="input" id="title" minlength="5">
+        <label for="author" class="label">Author: </label>
+        <input type="text" name="author" class="input" id="author" minlength="5">
+        <label for="pageCount" class="label">Number of Pages: </label>
+        <input type="number" name="pageCount" class="input" id="pageCount" min="1">
+        <label for="isBookRead" class="label">Read?</label>
+        <input type="checkbox" name="isBookRead" id="isBookRead">
+        <button id="submit">Submit</button>
+    </form>
+    <div id="bookFormError">
+    </div>
+</body>
+</html>
