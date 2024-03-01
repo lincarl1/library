@@ -55,6 +55,8 @@ function showLibraryStats() {
 
 // Function for Displaying Library
 function showLibrary() {
+    // Reset the element since we are utilizing a for each to create each book
+    bookLibrary.innerHTML = '';
     // Set Local Storage of Books Equal to Library
     localStorage.setItem('books', JSON.stringify(library));
     showLibraryStats();
