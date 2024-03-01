@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
     <title></title>
 </head>
 <body>
@@ -13,31 +12,37 @@
     </div>
     <div id="stats">
         <h2>Library Log</h2>
-        <p id="totalBooks">Total Books: </p>
-        <p id="readCount">Read Count: </p>
-        <p id="notReadCount">Unread Count: </p>
+        <div id="stats-block">
+            <p id="totalBooks">Total Books Count: <span id="totalsBooksSpan"></span> </p>
+            <p id="readCount">Books Read: <span id="readCountSpan"></span> </p>
+            <p id="notReadCount">Books Not Yet Read: <span id="notReadCountSpan"></span> </p>
+        </div>
     </div>
     <div id="library">
-        <div class="book" id="addBookDiv" onclick="openForm()">
-            <h2 id="addBook" class="bookText">
-                +
-            </h2>
+        <div class="addBook" id="addBookDiv">
+            <button id="addBook" class="addBook">
+                <span><h2>Add Book +</h2></span>
+            </button>
         </div>
     </div>
     <!--Form-->
-    <form id="bookForm" class="book">
-        <button class="closeBtn" onclick="closeForm()">x</button>
-        <label for="title" class="label">Title: </label>
-        <input type="text" name="title" class="input" id="title" minlength="5">
-        <label for="author" class="label">Author: </label>
-        <input type="text" name="author" class="input" id="author" minlength="5">
-        <label for="pageCount" class="label">Number of Pages: </label>
-        <input type="number" name="pageCount" class="input" id="pageCount" min="1">
-        <label for="isBookRead" class="label">Read?</label>
-        <input type="checkbox" name="isBookRead" id="isBookRead">
-        <button id="submit">Submit</button>
-    </form>
-    <div id="bookFormError">
-    </div>
+    <dialog class="addBookDialog" id="bookFormDialog">
+        <form id="bookForm" class="book">
+            <label for="title" class="label">Title: </label>
+            <input type="text" id="title" class="input" name="title" minlength="5" />
+            <label for="author" class="label">Author: </label>
+            <input type="text" id="author" class="input" name="author" minlength="5" />
+            <label for="pageCount" class="label">Number of Pages: </label>
+            <input type="number" id="pageCount" class="input" name="pageCount" min="1" />
+            <label for="isBookRead" class="label">Read?</label>
+            <input type="checkbox" id="isBookRead" name="isBookRead" />
+            <div class="formBtn" id="formBtn">
+                <button class="closeBtn" id="closeBtn">Close</button>
+                <button id="submit" class="submit">Submit</button>
+            </div>
+        </form>
+    </dialog>
+    <div class="books" id="books"></div>
+    <script src="script.js"></script>
 </body>
 </html>
