@@ -7,7 +7,7 @@ const bookLibrary = document.querySelector(".books");
 const dialog = document.querySelector("dialog");
 const addBookButton = document.querySelector(".addBook");
 const closeFormBtn = document.querySelector(".closeBtn");
-const submitFormBtn = document.querySelector(".submit");
+const submitFormBtn = document.querySelector(".submitBtn");
 const inputList = document.querySelectorAll("dialog form input");
 const bookCount = document.querySelector("#totalsBooksSpan");
 const readCount = document.querySelector("#readCountSpan");
@@ -36,57 +36,87 @@ Book.prototype.info = function() {
 }
 // End Book Object //
 
-
 // Functions //
+
+//Add Book to Library
 function addBookToLibrary(userInput) {
     let newBook = new Book(...userInput, bookId);
     library.push(newBook)
-
-    // Create New Book Element Here
-    let bookCard = document.createElement('div');
-    bookCard.classList.add('bookCard');
-    bookCard.setAttribute('bookID', bookId);
-
-    let title = document.createElement('p');
-    title.classList.add('title');
-    title.textContent = `Title: ${userInput[0]}`;
-
-    let author = document.createElement('p');
-    author.classList.add('author');
-    author.textContent = `Author: ${userInput[1]}`;
-
-    let pages = document.createElement('p');
-    pages.classList.add('pages');
-    pages.textContent = `Number of Pages: ${userInput[2]}`;
-
-    // let beenReadBtn = document.createElement('button');
-    // beenReadBtn.classList.add('readStatus');
-    // if (userInput[3] === true) {
-    //     beenReadBtn.textContent = 'Read';
-    //     beenReadBtn.classList.add('read');
-    // }
-    // else beenReadBtn.textContent = 'Not read';
-    // //Event Toggler for Been Read Button
-    // beenReadBtn.addEventListener("click", () => {
-    //     let result = beenReadBtn.classList.toggle('read');
-    //     beenReadBtn.textContent = result ? 'Read' : 'Not Read';
-    // });
-
-    // let deleteBtn = document.createdElement('button');
-    // deleteBtn.classList.add('remove');
-    // deleteBtn.textContent = 'Delete';
-    // deleteBtn.addEventListener('click', (e) => {
-    //     console.log(e);
-    // });
-
-    // let cardButtons = document.createdElement('div');
-    // cardButtons.classList.add('cardButtons');
-    // cardButtons.append(beenReadBtn, deleteBtn);
-
-    // bookCard.append(title, author, pages, cardButtons);
-    bookCard.append(title, author, pages);
-    bookLibrary.append(bookCard);
     bookId++;
+    showLibrary();
+}
+
+// Set Stats Content
+function showLibraryStats() {
+    bookCount.textContent = getBookCount();
+    readCount.textContent = getReadCount();
+    unreadCount.textContent = getUnreadCount();
+}
+
+// Function for Displaying Library
+function showLibrary() {
+    // Set Local Storage of Books Equal to Library
+    localStorage.setItem('books', JSON.stringify(library));
+    showLibraryStats();
+    for(let i = 0; i < library.length; i++)
+    {
+        // Create New Book Element Here
+        let bookCard = document.createElement('div');
+        bookCard.classList.add('bookCard');
+        bookCard.setAttribute('bookID', library[i].id);
+
+        let title = document.createElement('p');
+        title.classList.add('title');
+        title.textContent = `Title: ${library[i].title}`;
+
+        let author = document.createElement('p');
+        author.classList.add('author');
+        author.textContent = `Author: ${library[i].author}`;
+
+        let pages = document.createElement('p');
+        pages.classList.add('pages');
+        pages.textContent = `Number of Pages: ${library[i].pages}`;
+
+        let beenReadBtn = document.createElement('button');
+        beenReadBtn.classList.add('readStatus');
+        if (library[i].read === true) {
+            beenReadBtn.textContent = 'Read';
+            beenReadBtn.classList.add('read');
+        }
+        else beenReadBtn.textContent = 'Not read';
+        //Event Toggler for Been Read Button
+        beenReadBtn.addEventListener("click", (e) => {
+            // Toggle Between Read and Unread
+            let result = beenReadBtn.classList.toggle('read');
+            beenReadBtn.textContent = result ? 'Read' : 'Not Read';
+
+            // Get Book Index and Update Read Status
+            let bookId = e.target.parentNode.parentNode.getAttribute("bookID");
+            let libraryIndex = library.findIndex((book) => book.id === +bookId);
+            library[libraryIndex].read = result;
+            showLibraryStats(); //Refresh the Library Stats
+
+        });
+
+        let deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('remove');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.addEventListener('click', (e) => {
+            let bookId = e.target.parentNode.parentNode.getAttribute("bookID");
+            let libraryIndex = library.findIndex((book) => book.id === +bookId);
+            library.splice(libraryIndex, 1);
+            // Remove from DOM
+            e.target.parentNode.parentNode.remove();
+            showLibrary();
+        });
+
+        let cardButtons = document.createElement('div');
+        cardButtons.classList.add('cardButtons');
+        cardButtons.append(beenReadBtn, deleteBtn);
+
+        bookCard.append(title, author, pages, cardButtons);
+        bookLibrary.append(bookCard);
+    }
 }
 
 // Get Book Count
@@ -130,11 +160,10 @@ closeFormBtn.addEventListener("click", () => {
     dialog.close();
 });
 
+// Button on submit form
 submitFormBtn.addEventListener("click", (e) => {
     let inputArray = Array.from(inputList);
     let validArray = inputArray.map((userInput) => userInput.validity.valid);
-
-    console.log(inputList);
 
     if(!validArray.includes(false))
     {
@@ -148,14 +177,11 @@ submitFormBtn.addEventListener("click", (e) => {
     }
 });
 
-showLibrary();
+// showLibraryStats();
 
-let book1 = new Book('Dragon', 'Harry Potter', 'TOO MANY', false, 1);
-let book2 = new Book('Soccer', 'Lionel Messi', 'TOO MANY', true, 2);
+// let book1 = new Book('Dragon', 'Harry Potter', '500', false, -1);
+// let book2 = new Book('Soccer', 'Lionel Messi', '600', true, 0);
 // library.push(book1);
 // library.push(book2);
 
-// Generate HTML for Library Stats
-// document.getElementById('totalBooks').innerHTML = `Total Books: ${getBookCount()}`;
-// document.getElementById('readCount').innerHTML = `Books Read: ${getReadCount()}`;
-// document.getElementById('notReadCount').innerHTML = `Books Not Yet Read: ${getUnreadCount()}`;
+showLibrary();

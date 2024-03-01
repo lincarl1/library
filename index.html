@@ -27,7 +27,7 @@
     </div>
     <!--Form-->
     <dialog class="addBookDialog" id="bookFormDialog">
-        <form id="bookForm" class="book">
+        <form id="bookForm" class="book" onsubmit="return false">
             <label for="title" class="label">Title: </label>
             <input type="text" id="title" class="input" name="title" minlength="5" />
             <label for="author" class="label">Author: </label>
@@ -38,7 +38,7 @@
             <input type="checkbox" id="isBookRead" name="isBookRead" />
             <div class="formBtn" id="formBtn">
                 <button class="closeBtn" id="closeBtn">Close</button>
-                <button id="submit" class="submit">Submit</button>
+                <button class="submitBtn" id="submitBtn">Submit</button>
             </div>
         </form>
     </dialog>

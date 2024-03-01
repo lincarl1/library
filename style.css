@@ -68,4 +68,6 @@ form {
 
 .books > div {
     border: black;
+    background-color: coral;
+    padding: 10px;
 }
