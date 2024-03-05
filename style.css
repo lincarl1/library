@@ -60,14 +60,29 @@ form {
 
 .books {
     display: grid;
-    grid-template: auto / auto auto auto auto;
-    gap: 25px;
+    grid-template: auto / 1fr 1fr 1fr 1fr;
+    gap: 5px;
     border: black;
-    padding: 0px 10px;
+    padding: 20px 10px;
 }
 
 .books > div {
-    border: black;
-    background-color: coral;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #0094C6;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    width: 250px;
+    height: 250px;
+    max-width: 100%;
+    max-height: 100%;
     padding: 10px;
+    color: white;
+}
+
+.cardButtons {
+    display: flex;
+    justify-content: space-between;
 }

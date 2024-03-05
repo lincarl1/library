@@ -112,11 +112,15 @@ function showLibrary() {
             showLibrary();
         });
 
+        let bookInfo = document.createElement('div');
+        bookInfo.classList.add('bookInfo');
+        bookInfo.append(title, author, pages);
+
         let cardButtons = document.createElement('div');
         cardButtons.classList.add('cardButtons');
         cardButtons.append(beenReadBtn, deleteBtn);
 
-        bookCard.append(title, author, pages, cardButtons);
+        bookCard.append(bookInfo, cardButtons);
         bookLibrary.append(bookCard);
     }
 }
@@ -181,9 +185,9 @@ submitFormBtn.addEventListener("click", (e) => {
 
 // showLibraryStats();
 
-// let book1 = new Book('Dragon', 'Harry Potter', '500', false, -1);
-// let book2 = new Book('Soccer', 'Lionel Messi', '600', true, 0);
-// library.push(book1);
-// library.push(book2);
+let book1 = new Book('Dragon', 'Harry Potter', '500', false, -1);
+let book2 = new Book('Soccer', 'Lionel Messi', '600', true, 0);
+library.push(book1);
+library.push(book2);
 
 showLibrary();
